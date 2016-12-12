@@ -22,13 +22,35 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // ROUTES
 // Root Route
-
+app.get('/', function (req, res) {
+  res.sendFile('views/index.html' , { root : __dirname});
+});
 
 // Gallery View Route
 
 
 // The Number Guessing Game
+var targetNumber = 10;
 
+app.get('/pickanumber', function(req, res){
+  var number = parseInt(req.query.number);
+  if (number === targetNumber){
+    res.send('Nailed it!');
+  } else if (number > targetNumber){
+    res.send('Too High!');
+  } else if (number < targetNumber) {
+    res.send('Too Low');
+  }
+  // else {
+  //   console.log('Something odd happened! target:', targetNumber, typeof(targetNumber),'number:', number, typeof(number));
+  //   res.send('Your guess is beyond compare!');
+  // }
+});
+
+app.post('/pick-a-number', function(request, response){
+  targetNumber = parseInt(req.body.number);
+  res.status(200).send('Number updated successfully!');
+});
 
 // Gallery
 
